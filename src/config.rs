@@ -42,7 +42,7 @@ To use RTWI, you must generate "$HOME/.config/rtwi/Config.toml" following the st
 Steps: 
   1. Access to "https://apps.twitter.com/app/new" and create an app.
   2. Please input "api_key", "api_secret_key", "access_token", "access_token_secret" in order.
-    "#
+"#
     );
 
     let stdin = std::io::stdin();
