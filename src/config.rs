@@ -73,7 +73,7 @@ Steps:
         access_token_secret = access_token_secret.trim_end().to_string();
 
         print!(
-            r#"\n
+            r#"
         === Confirm ===
         api_key = {}
         api_secret_key = {}

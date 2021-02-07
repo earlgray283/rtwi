@@ -6,7 +6,7 @@ mod config;
 mod twitter_api;
 
 #[derive(Clap)]
-#[clap(version = "0.1.0", author = "earlgray <@earlgray329>")]
+#[clap(version = "0.1.1", author = "earlgray <@earlgray329>")]
 struct Opts {
     #[clap(subcommand)]
     subcmd: SubCommand,
@@ -29,6 +29,7 @@ struct Tweet {
 #[tokio::main]
 async fn main() -> Result<()> {
     let opts = Opts::parse();
+    config::create_config_dir()?;
 
     match opts.subcmd {
         SubCommand::Login => {
