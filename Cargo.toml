@@ -5,6 +5,7 @@ authors = ["earlgray"]
 edition = "2018"
 description = "Twitter Command Line Tool for people who hope real twitter"
 license = "MIT"
+repository = "https://github.com/earlgray283/rtwi"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
