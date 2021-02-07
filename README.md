@@ -1,4 +1,5 @@
 # RTWI (Real Twitter)
+[![rtwi at crates.io](https://img.shields.io/crates/v/rtwi.svg)](https://crates.io/crates/rtwi)
 ## What is RTWI?
  On twitter, you don't need to find other person's tweets because `twitter` means `a person who tweet`. On RTWI, you can only tweet, so you can experience `Real Twitter`. 
 

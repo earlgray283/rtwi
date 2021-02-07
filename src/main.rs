@@ -6,7 +6,7 @@ mod config;
 mod twitter_api;
 
 #[derive(Clap)]
-#[clap(version = "0.1.11", author = "earlgray <@earlgray329>")]
+#[clap(version = "0.1.12", author = "earlgray <@earlgray329>")]
 struct Opts {
     #[clap(subcommand)]
     subcmd: SubCommand,
