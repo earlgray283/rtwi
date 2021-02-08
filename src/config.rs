@@ -27,7 +27,16 @@ impl Config {
 
         let mut buf = String::new();
         file.read_to_string(&mut buf).unwrap();
-        let config = toml::from_str::<Config>(&buf)?;
+        let config = match toml::from_str::<Config>(&buf) {
+            Ok(config) => config,
+            Err(e) => {
+                return Err(anyhow!(format!(
+                    "The contents of Config.toml have changed since v0.2.0.
+Sorry, please run 'rtwi login' again.\n{:?}",
+                    &e
+                )))
+            }
+        };
 
         Ok(config)
     }
@@ -47,8 +56,6 @@ pub fn create_config_file() -> Result<()> {
 
     let config = input_config();
     let toml = toml::to_string(&config)?;
-
-
 
     let mut file = File::create(&config_file_path)?;
     if let Err(e) = file.write_all(toml.as_bytes()) {
