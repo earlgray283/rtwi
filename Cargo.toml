@@ -1,6 +1,6 @@
 [package]
 name = "rtwi"
-version = "0.1.12"
+version = "0.2.0"
 authors = ["earlgray"]
 edition = "2018"
 description = "Twitter Command Line Tool for people who hope real twitter"

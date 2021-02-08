@@ -53,7 +53,7 @@ status: tweeted
 
 ```
 
-### 3. status(TODO)
+### 3. status
 ```console
 $ rtwi status
 display name: あーるぐれい

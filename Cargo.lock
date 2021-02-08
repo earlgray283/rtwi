@@ -800,7 +800,7 @@ dependencies = [
 
 [[package]]
 name = "rtwi"
-version = "0.1.12"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "base64",
