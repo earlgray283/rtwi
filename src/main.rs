@@ -40,6 +40,7 @@ async fn main() -> Result<()> {
             let config = Config::new()?;
             let client = Client::new(&config);
             let _res = client.tweet(&tweet.text).await?;
+            print!("status: tweeted\n\n");
         }
         SubCommand::Logout => {
             todo!();

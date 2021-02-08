@@ -9,8 +9,8 @@ use std::{
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
-    pub twitter_api_info: TwitterApiInfo,
     pub name: String,
+    pub twitter_api_info: TwitterApiInfo,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -48,6 +48,8 @@ pub fn create_config_file() -> Result<()> {
     let config = input_config();
     let toml = toml::to_string(&config)?;
 
+
+
     let mut file = File::create(&config_file_path)?;
     if let Err(e) = file.write_all(toml.as_bytes()) {
         remove_file(&config_file_path)?;
@@ -61,8 +63,9 @@ pub fn open_config_file() -> Result<File> {
     let config_file_path = format!("{}/.config/rtwi/Config.toml", env::var("HOME").unwrap());
     if !Path::new(&config_file_path).exists() {
         return Err(anyhow!(
-            r#"It seems that you didn't create config file :(
-            Please run '$ rtwi login'"#
+            r#"
+    You don't seem to login yet :(
+    Please run '$ rtwi login'"#
         ));
     }
 
@@ -85,43 +88,41 @@ Steps:
 
     let stdin = std::io::stdin();
 
-    let mut api_key ;
+    let mut api_key;
     let mut api_secret_key;
     let mut access_token;
     let mut access_token_secret;
 
     loop {
-        api_key = read_string(&stdin, "api_key = ");
-        api_secret_key = read_string(&stdin, "api_secret_key = ");
-        access_token = read_string(&stdin, "access_token = ");
-        access_token_secret = read_string(&stdin, "access_token_secret = ");
+        api_key = read_string(&stdin, "    api_key = ");
+        api_secret_key = read_string(&stdin, "    api_secret_key = ");
+        access_token = read_string(&stdin, "    access_token = ");
+        access_token_secret = read_string(&stdin, "    access_token_secret = ");
 
         let prmt = &format!(
             r#"
-====== Confirm ======
-api_key = {}
-api_secret_key = {}
-access_token = {}
-access_token_secret = {}
-"#,
+================== Confirm ==================
+    api_key = {}
+    api_secret_key = {}
+    access_token = {}
+    access_token_secret = {}
+
+If you are OK, then please type y, else type n > "#,
             api_key, api_secret_key, access_token, access_token_secret
         );
         let yn = read_string(&stdin, prmt);
+        stdout().flush().unwrap();
         if yn.trim_end() == "y".to_string() {
+            println!();
             break;
         }
     }
 
-    print!(
-        r#"
- 3. Please input your twitter screen_name. (example: screen_name = @earlgray329)
- screen_name = "#
-    );
-    stdout().flush().unwrap();
+    println!("3. Please input your twitter screen_name. (example: screen_name = @earlgray329)");
 
     let mut name;
     loop {
-        name = read_string(&stdin, "");
+        name = read_string(&stdin, "    screen_name = ");
         if name.strip_prefix("@").is_none() {
             println!("screen_name must have a prefix of @. (example: screen_name = @earlgray329)");
             continue;
