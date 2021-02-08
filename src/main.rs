@@ -5,6 +5,7 @@ use twitter_api::Client;
 
 mod config;
 mod twitter_api;
+mod sub_command;
 
 #[derive(Clap)]
 #[clap(version = "0.1.12", author = "earlgray <@earlgray329>")]
@@ -39,8 +40,17 @@ async fn main() -> Result<()> {
         SubCommand::Tweet(tweet) => {
             let config = Config::new()?;
             let client = Client::new(&config);
-            let _res = client.tweet(&tweet.text).await?;
-            print!("status: tweeted\n\n");
+
+            let res = client.tweet(&tweet.text).await;
+
+            println!(
+                "status: {}",
+                if res.is_ok() {
+                    "tweeted".to_string()
+                } else {
+                    format!("error\n{:?}", res.map_err(|e| e))
+                }
+            )
         }
         SubCommand::Logout => {
             todo!();
@@ -48,8 +58,9 @@ async fn main() -> Result<()> {
         SubCommand::Status => {
             let config = Config::new()?;
             let client = Client::new(&config);
-            let res = client.show_profile(Some(&config.name), None).await?;
-            println!("{:?}", &res);
+
+            let user_info = client.get_profile(Some(&config.name), None).await?;
+            sub_command::show_profile(&user_info);
         }
     }
 

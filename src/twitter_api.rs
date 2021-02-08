@@ -9,8 +9,8 @@ use reqwest::{
 use serde_derive::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
-mod tweet;
-mod user;
+pub mod tweet;
+pub mod user;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Client {
@@ -152,6 +152,7 @@ fn percent_encode(s: &str) -> percent_encoding::PercentEncode {
 trait Collect {
     fn equal_collect(&self) -> Vec<String>;
 }
+
 impl Collect for Vec<(&str, &str)> {
     fn equal_collect(&self) -> Vec<String> {
         self.iter()
