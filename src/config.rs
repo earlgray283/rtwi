@@ -71,12 +71,6 @@ pub fn open_config_file() -> Result<File> {
     Ok(file)
 }
 
-fn write_config_file(config: &Config) -> Result<()> {
-    let toml = toml::to_string(&config)?;
-
-    Ok(())
-}
-
 pub fn input_config() -> Config {
     print!(
         r#"
@@ -91,10 +85,10 @@ Steps:
 
     let stdin = std::io::stdin();
 
-    let mut api_key = String::new();
-    let mut api_secret_key = String::new();
-    let mut access_token = String::new();
-    let mut access_token_secret = String::new();
+    let mut api_key ;
+    let mut api_secret_key;
+    let mut access_token;
+    let mut access_token_secret;
 
     loop {
         api_key = read_string(&stdin, "api_key = ");
@@ -125,7 +119,7 @@ access_token_secret = {}
     );
     stdout().flush().unwrap();
 
-    let mut name = String::new();
+    let mut name;
     loop {
         name = read_string(&stdin, "");
         if name.strip_prefix("@").is_none() {

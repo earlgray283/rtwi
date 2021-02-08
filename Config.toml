@@ -1,6 +1,8 @@
 # https://developer.twitter.com/en/portal/apps/new
 
-[config]
+name = "@earlgrayyyy!!!!"
+
+[client]
 api_key = "api_keyyyy!!!!"
 api_secret_key = "api_secret_keyyyy!!!!"
 access_token = "access_tokennnn!!!!"
