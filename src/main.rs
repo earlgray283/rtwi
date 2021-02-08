@@ -1,5 +1,6 @@
 use anyhow::Result;
 use clap::Clap;
+use config::Config;
 use twitter_api::Client;
 
 mod config;
@@ -17,6 +18,7 @@ enum SubCommand {
     Login,
     Logout,
     Tweet(Tweet),
+    Status,
 }
 
 #[derive(Clap)]
@@ -29,18 +31,24 @@ struct Tweet {
 #[tokio::main]
 async fn main() -> Result<()> {
     let opts = Opts::parse();
+
     config::create_config_dir()?;
 
     match opts.subcmd {
-        SubCommand::Login => {
-            config::create_config_file().await?;
-        }
+        SubCommand::Login => config::create_config_file()?,
         SubCommand::Tweet(tweet) => {
-            let client = Client::from_config().await?;
+            let config = Config::new()?;
+            let client = Client::new(&config);
             let _res = client.tweet(&tweet.text).await?;
         }
         SubCommand::Logout => {
             todo!();
+        }
+        SubCommand::Status => {
+            let config = Config::new()?;
+            let client = Client::new(&config);
+            let res = client.show_profile(Some(&config.name), None).await?;
+            println!("{:?}", &res);
         }
     }
 
