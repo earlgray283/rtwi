@@ -1,4 +1,4 @@
-use super::config;
+use super::config::Config;
 use anyhow::Result;
 use percent_encoding::{utf8_percent_encode, AsciiSet, NON_ALPHANUMERIC};
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
@@ -8,9 +8,9 @@ use reqwest::{
 };
 use serde_derive::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-use tokio::io::AsyncReadExt;
 
-mod tweet;
+pub mod tweet;
+pub mod user;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Client {
@@ -21,15 +21,13 @@ pub struct Client {
 }
 
 impl Client {
-    pub async fn from_config() -> Result<Self> {
-        config::create_config_dir()?;
-        let mut file = config::open_config_file().await?;
-
-        let mut buf = String::new();
-        file.read_to_string(&mut buf).await.unwrap();
-        let client = toml::from_str::<Client>(&buf)?;
-
-        Ok(client)
+    pub fn new(config: &Config) -> Self {
+        Self {
+            api_key: config.twitter_api_info.api_key.clone(),
+            api_secret_key: config.twitter_api_info.api_secret_key.clone(),
+            access_token: config.twitter_api_info.access_token.clone(),
+            access_token_secret: config.twitter_api_info.access_token_secret.clone(),
+        }
     }
 
     async fn request(
@@ -154,6 +152,7 @@ fn percent_encode(s: &str) -> percent_encoding::PercentEncode {
 trait Collect {
     fn equal_collect(&self) -> Vec<String>;
 }
+
 impl Collect for Vec<(&str, &str)> {
     fn equal_collect(&self) -> Vec<String> {
         self.iter()

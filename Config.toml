@@ -1,6 +1,10 @@
-# https://developer.twitter.com/en/portal/apps/new
+# Example of Config.toml
+# It is located on `$HOME/.config/rtwi`
+# You can generate Twitter api key on https://developer.twitter.com/en/portal/apps/new
 
-[config]
+name = "@earlgrayyyy!!!!"
+
+[twitter_api_info]
 api_key = "api_keyyyy!!!!"
 api_secret_key = "api_secret_keyyyy!!!!"
 access_token = "access_tokennnn!!!!"
