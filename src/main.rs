@@ -4,8 +4,8 @@ use config::Config;
 use twitter_api::Client;
 
 mod config;
-mod twitter_api;
 mod sub_command;
+mod twitter_api;
 
 #[derive(Clap)]
 #[clap(version = "0.2.0", author = "earlgray <@earlgray329>")]
@@ -48,7 +48,7 @@ async fn main() -> Result<()> {
                 if res.is_ok() {
                     "tweeted".to_string()
                 } else {
-                    format!("error\n{:?}", res.map_err(|e| e))
+                    format!("error\n{res:?}")
                 }
             )
         }

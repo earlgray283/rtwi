@@ -106,7 +106,7 @@ Steps:
         access_token = read_string(&stdin, "    access_token = ");
         access_token_secret = read_string(&stdin, "    access_token_secret = ");
 
-        let prmt = &format!(
+        let prmt = format!(
             r#"
 ================== Confirm ==================
     api_key = {}
@@ -117,9 +117,9 @@ Steps:
 If you are OK, then please type y, else type n > "#,
             api_key, api_secret_key, access_token, access_token_secret
         );
-        let yn = read_string(&stdin, prmt);
+        let yn = read_string(&stdin, &prmt);
         stdout().flush().unwrap();
-        if yn.trim_end() == "y".to_string() {
+        if yn.trim_end() == "y" {
             println!();
             break;
         }
@@ -130,7 +130,7 @@ If you are OK, then please type y, else type n > "#,
     let mut name;
     loop {
         name = read_string(&stdin, "    screen_name = ");
-        if name.strip_prefix("@").is_none() {
+        if name.strip_prefix('@').is_none() {
             println!("screen_name must have a prefix of @. (example: screen_name = @earlgray329)");
             continue;
         }
@@ -150,7 +150,7 @@ If you are OK, then please type y, else type n > "#,
 }
 
 fn read_string(stdin: &std::io::Stdin, prompt: &str) -> String {
-    print!("{}", prompt);
+    print!("{prompt}");
     stdout().flush().unwrap();
 
     let mut buf = String::new();
