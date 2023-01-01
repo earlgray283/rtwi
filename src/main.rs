@@ -1,5 +1,5 @@
 use anyhow::Result;
-use clap::Clap;
+use clap::Parser;
 use config::Config;
 use twitter_api::Client;
 
@@ -7,14 +7,14 @@ mod config;
 mod sub_command;
 mod twitter_api;
 
-#[derive(Clap)]
-#[clap(version = "0.2.0", author = "earlgray <@earlgray329>")]
+#[derive(Parser)]
+#[command(version = "0.2.0", author = "earlgray <@earlgray329>")]
 struct Opts {
     #[clap(subcommand)]
     subcmd: SubCommand,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 enum SubCommand {
     Login,
     Logout,
@@ -22,9 +22,9 @@ enum SubCommand {
     Status,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct Login;
-#[derive(Clap)]
+#[derive(Parser)]
 struct Tweet {
     text: String,
 }
